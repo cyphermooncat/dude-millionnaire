@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: monospace;
+            text-align: center;
+        }
+        #question {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: inline-block;
+            width: 80%;
+        }
+        .element {
+            font-size: 14px;
+            border: 1px solid white;
+            padding: 5px;
+            margin: 5px;
+            cursor: pointer;
+            display: inline-block;
+            width: 45%;
+            box-sizing: border-box;
+        }
+        .right {
+            background-color: green;
+        }
+        .wrong {
+            background-color: red;
+        }
+        #current-prize {
+            font-size: 14px;
+            color: yellow;
+            margin-bottom: 10px;
+        }
+        .joker {
+            font-size: 14px;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+            width: 6%;
+            box-sizing: border-box;
+        }
+        #logo {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        #animation {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+                    
+        #aide {
+            font-size: 16px;
+            margin-top: 10px;
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo">
+    WHO WANTS TO BE A $DUDE MILLIONAIRE ?
+    </div>
+    <pre>
+            :===-.         
+        .#**=##@#@@#+#.     
+      :%+##*WHO=..*%#=%:   
+     =+##.=-...  WANTS*%%=  
+    =@@TO-.+=. BE  + A %@= 
+   .%@@. :^  $DUDE :* .:%@%.
+   :--.:+ MILLIONAIRE +.:=*:
+   .%@%-..#. $DUDE .%.*-@@%.
+    =@@**=BE `  ..-A.+*#%@= 
+     =@+TO :--. .].=:.*##=  
+      :#=%WANTS+ -%*#%+#:   
+        .#@-@ WHO@**=#.     
+            .-=+=-.         
+    </pre>
+    </pre>
+    <div id="current-prize">Actual gain: </div>
+    <div>
+        <div id="question" class="element"></div><br>
+        <div id="joker_5050" class="joker">50:50</div>
+        <div id="joker_tel" class="joker">☎</div>
+        <div id="joker_pub" class="joker">👥</div>
+    </div>
+    <div id="element0" class="element"></div>
+    <div id="element1" class="element"></div>
+    <div id="element2" class="element"></div>
+    <div id="element3" class="element"></div>
+    <div id="aide"></div>
+    <div id="animation"></div>
+    <div id="tryagain" class="element">Try Again</div>
+
+    <script>
+        const quizData = [
+            {
+                rank: 1,
+                name: "What does the acronym NFT stand for?",
+                answers: ["No FUD thanks", "Not Federal Time", "Non-fungible Token", "Non-fungible transfer"],
+                rightAnswerHash: "f02a16f0f8128bb637ca4ae7864bcb91664a89e79e08666de177e2c3e01ffa8f"
+            },
+            {
+                rank: 1,
+                name: "Who invented Ethereum?",
+                answers: ["Vitalik Butterin", "Elon Musk", "Satoshi Nakamoto", "Chuck Norris"],
+                rightAnswerHash: "fc4ccbbbfb49e16a06e84d25e062bf797bdde8ab6cc96dc57001f6596743da90"
+            },
+            {
+                rank: 1,
+                name: "What is the name of the first NFT exchange platform?",
+                answers: ["eBay", "Opensea", "Open Bazar", "MagicEden"],
+                rightAnswerHash: "bd5d18ea63d60c72d098c3f527892cb6a59b28a4cf9993580ebedce5ac89d2d7"
+            },
+            {
+                rank: 2,
+                name: "Who mined the first Bitcoin block?",
+                answers: ["Roger Ver", "Craig Wright", "Angus Young", "Satoshi Nakamoto"],
+                rightAnswerHash: "a0dc65ffca799873cbea0ac274015b9526505daaaed385155425f7337704883e"
+            },
+            {
+                rank: 2,
+                name: "What is the name of the largest crypto bank? As of 2024",
+                answers: ["FTX", "BINANCE", "KRAKEN", "COINBASE"],
+                rightAnswerHash: "4c120812a73696ba998aeecab386d93a9b17332e36d6ef2c0294b8a6c6d03319"
+            },
+            {
+                rank: 3,
+                name: "What is the name of the first memecoin?",
+                answers: ["SPX6900", "Shiba Inu", "Dogecoin", "zCash"],
+                rightAnswerHash: "bbc8f6fd09a91728645de42a4f47f1600f8de1191ffeebdb2878c1dcb818aba9"
+            },      
+            {
+                rank: 5,
+                name: "What is the name of the hardware wallet from Ledger with an e-ink touchscreen?",
+                answers: ["STIX", "STAX", "STUX", "STEX"],
+                rightAnswerHash: "f2bf887c8f47b212da8c781a099df07b992fc0ea75654b11f4fda75aee1711a1"
+            },
+            {
+                rank: 4,
+                name: "How does a Ledger Nano S connect to a PC?",
+                answers: ["WIFI", "VGA", "USB", "HDMI"],
+                rightAnswerHash:  "61f0acff1735aac46ba11f249dd555a22fd09193d54e6383809d3cce12780408"
+            },
+            {
+                rank: 6,
+                name: "When was the company Ledger created?",
+                answers: ["2017", "2016", "2015", "2014"],
+                rightAnswerHash: "96da37e95d5cc34fe3bef6c89428df859b8a217630d0c664da1daf1539caacf5"
+            },            
+            {
+                rank: 4,
+                name: "Who started the cryptoart movement named trashart?",
+                answers: ["Robness", "Xcopy", "AllSeingSeneca", "Coldie"],
+                rightAnswerHash: "6ac4d1607f260828ec62dc8598000ec28badb002fb70fec9c870bf596fba6920"
+            },
+            {
+                rank: 7,
+                name: "Who created the first generative art NFT based on artificial intelligence (AI)?",
+                answers: ["Pindar Van Arman", "Eric Calderone", "Robbie Barrat", "John Orion Young"],
+                rightAnswerHash: "36d4a15ceaeb6a8d09d5e03c73fbff8f6a2e340e71e55d3315e77400ffc06f9f"
+            },
+            {
+                rank: 6,
+                name: "Who created the first generative NFT photographic art?",
+                answers: ["Trevor Jones", "Foodmasku", "Refik Anadol", "Justin Aversano"],
+                rightAnswerHash: "bdda1902bfbb64a1d316a053cb8ddc3d863de432f01949887115e65cb782c379"
+            },
+            {
+                rank: 8,
+                name: "Which one is a name of a cryptopunk documentary? ",
+                answers: ["Cryptopunk & MoonCat !", "Blockchain art !", " Punkdoc !", "What the punk !"],
+                rightAnswerHash: "ac0cf01a9d3a1a23fabf27d4b92d9c7d48d508e0eee230c9dfaf3de818da1e06"
+            },
+            {
+                rank: 10,
+                name: "What is the max supply token of Einsteinium?",
+                answers: ["245 465 283", "156 992 816", " 593 456 182", "124 564 348"],
+                rightAnswerHash: "7ed9c52c767dbb5d0e8a8d41d0d6bd962d8404289a8ad9fb4d0aa7d4f5395607"
+            },
+            {
+                rank: 2,
+                name: "What is the name of the first altcoin?",
+                answers: ["Dogecoin", "23 Skidoo", "Bit Gold", "Namecoin"],
+                rightAnswerHash: "5f4499b8561e97232dfb7c16f3c2acc54b9b1a48ba57111554953b8e5ee99f94"
+            },
+            {
+                rank: 5,
+                name: "How much money was raised during the ICO of the WAVES blockchain?",
+                answers: ["$14M", "$16M", "$18M", "$20M"],
+                rightAnswerHash: "a0e734ffab371a4b98b51ecfdef0632a151b6bb7f731fb7030747c24fe18bf56"
+            },
+            {
+                rank: 9,
+                name: "What is the term for a fundraising event in crypto?",
+                answers: ["ICO", "IPO", "IDO", "IXO"],
+                rightAnswerHash: "abe5fa001cd6567634a9cbe8d016819c5c91a153395963bc5c8930099a583aec"
+            },
+            {
+                rank: 8,
+                name: "Who raised $4 billion in an ICO in 2018?",
+                answers: ["Tezos", "FileCoin", "EOS", "DragonCoin"],
+                rightAnswerHash: "b6d20684d51a031b9268dba1b5cefca014dca2d47f19a21521607af94379747e"
+            },
+            {
+                rank: 7,
+                name: "When did the The DAO hack occur on Ethereum?",
+                answers: ["07/17/2016", "07/17/2015", "03/04/2016", "03/04/2015"],
+                rightAnswerHash: "417f3af533c3e34a65dffbf60de7d4f94143cfb54c8c44c2e0179f89ef5e56f1"
+            },
+            {
+                rank: 5,
+                name: "What is the name of the major staked liquidity provider on Ethereum? (snapshot 2024)",
+                answers: ["Bankless", "LIDO", "MoonPay", "BINANCE"],
+                rightAnswerHash: "e627bdc0b87f65d9ad0f97f6b723ce2d3e4a396bc8fe00ebd49c7d9f594fc910"
+            },
+            {
+                rank: 5,
+                name: "What is the name of the currency that resulted from the fork after The DAO hack?",
+                answers: ["Ether2.0", "Ether2", "Ether Classic", "EtherOG"],
+                rightAnswerHash: "3465f4ab0c112c6bd3274347e3d6af54ee7bdb32edfaf10ea93dd81a2539159b"
+            },
+            {
+                rank: 9,
+                name: "How many Cryptopunks wear 3D glasses?",
+                answers: ["306", "246", "266", "286"],
+                rightAnswerHash: "00328ce57bbc14b33bd6695bc8eb32cdf2fb5f3a7d89ec14a42825e15d39df60"
+            },
+            {
+                rank: 3,
+                name: "Which NFT collection dates back to 2017?",
+                answers: ["MoonCats", "Etherlambos", "Cool Cats", "Terraforms"],
+                rightAnswerHash: "c82a704e843b187ab956ee924da9521b85bed88e91c295399414244731c00c45"
+            },
+            {
+                rank: 9,
+                name: "How many punks were burned as of July 9, 2024?",
+                answers: ["7", "2", "15", "6"],
+                rightAnswerHash: "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683"
+            },
+            {
+                rank: 7,
+                name: "How many Mooncat Genesis are there?",
+                answers: ["69", "96", "24", "42"],
+                rightAnswerHash: "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4"
+            },
+            {
+                rank: 6,
+                name: "What is the name of Snoop Dogg's NFT collection?",
+                answers: ["RareDoggs", "DeathRowNFT", "Snoopies", "Doggies"],
+                rightAnswerHash: "03dc6eab846cd144d1d628ee36a967c61165bdee1ad93fe8da07575acd4950b1"
+            },
+            {
+                rank: 6,
+                name: "Which artist is the lead designer of the Bored Apes collection?",
+                answers: ["ClonCast", "GordonGoner", "Amber Vittoria", "AllSeeingSeneca"],
+                rightAnswerHash: "57c054493f0932d5344a46c80e078794623a21e50f471b3fede7ff4d930b71be"
+            },
+            {
+                rank: 10,
+                name: "What is the name of the encoding function in the Cypherdude smart contract?",
+                answers: ["WriteCard", "EncodeDude", "WriteDude", "CypherCard"],
+                rightAnswerHash: "6e0c6c8054a1c88a9d2f2a9417b8282bdc15e6d2901e956bb40ad765229b2d7b"
+            },
+            {
+                rank: 6,
+                name: "What is the max supply of Cypherdudes?",
+                answers: ["4096", "512", "1024", "2048"],
+                rightAnswerHash: "bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9"
+            },
+            {
+                rank: 7,
+                name: "What's the ticker of the Cypherdude NFT collectibles?",
+                answers: ["CYPH", "CYD", "FELIX", "CDUDE"],
+                rightAnswerHash: "9063ba9d80fa0c209794ac6f167fa4d81768f57d8ed08ccc610ed1cbe4745a2d"
+            },
+            {
+                rank: 8,
+                name: "Can you give the name of the first ever named Cypherdude?",
+                answers: ["FAMOUS", "MUSEUM", "SATOSHI", "IRON"],
+                rightAnswerHash: "ae4afa1b7a019375f5ca3d30085ddc484df42b63deddabb7d357c568c36848f4"
+            },
+            {
+                rank: 11,
+                name: "What's the method name of the claim word function of the Cypherdude?",
+                answers: ["0xb7d660e4", "0x6cc4f9d7", "0x87ab4e11", "0xe4604df4"],
+                rightAnswerHash: "aaeba5d59fe1830e7ce0d02bbbd3e0aa7fc88eea69720a39433d84ded034944f"
+            },
+            {
+                rank: 11,
+                name: "What's the Layer 3 of Cypherdudes paying homage to XCopy?",
+                answers: ["The Doomed", "MaxPain", "Last Selfie", "Mutatio"],
+                rightAnswerHash: "a49a92621314f1206f95a1cc0638535faf5b09572a59eff621b5fbf7b78811d3"
+            },
+            {
+                rank: 10,
+                name: "What does LSB stand for?",
+                answers: ["Last Satoshi Bug", "Lowest Similar Bit", "Leak Safe Brut", "Least Significant Bit"],
+                rightAnswerHash: "222cf50aae66a66f70e3a34e048f5c2866158e8a9ff42e8d06fb4b44054e177b"
+            },
+            {
+                rank: 12,
+                name: "Which word appears in the Bitcoin genesis block?",
+                answers: ["bitcoin", "Banksÿÿÿÿ", "artwork", "whitepaper"],
+                rightAnswerHash: "b68e8e841140975e6a226cec38f4977c930bed83ac0f1d4e9a9aa1d54454ea31"
+            },
+            {
+                rank: 6,
+                name: "What is the creation date of the Cypherdude?",
+                answers: ["02/22/2024", "12/31/2023", "01/15/2024", "03/08/2024"],
+                rightAnswerHash: "b28869b3556c63bbcfc3acec6b70fe0b4aaf4913e0ac781f92b4fa6f4167fc51"
+            },
+            {
+                rank: 5,
+                name: "Which one is a name of an artwork created by FelifFeliXFelix?",
+                answers: ["Athena Hack", "Shitcoin Sisyphus", "Dude Odyssey", "Zeus Glitch"],
+                rightAnswerHash: "fabbe026a5590b3d62a4992ebf04ee6dc182505aa0be9048c7c57fa446160a00"
+            },
+            {
+                rank: 8,
+                name: "Which color of bit palette does not exist in the Cypherdudes?",
+                answers: ["green", "grey", "yellow", "fuchsia"],
+                rightAnswerHash: "67fc36385bb47db091a4d850d450021a8b7ba3b58615fc918808d4e636d8ad46"
+            },
+            {
+                rank: 4,
+                name: "What is the name given to Cypherdude #1436?",
+                answers: ["GOLD", "SILVER", "LIBRARY", "DIAMOND"],
+                rightAnswerHash: "d77982267d9699c2a57bcab5bb975a1935f6427002f52fd4569762fd72db3a94"
+            },
+            {
+                rank: 11,
+                name: "What object can be seen in the archive #0 of the Cypherdudes?",
+                answers: ["Felix's gallery", "Felix's portrait", "Felix's book", "Felix's pet"],
+                rightAnswerHash: "1f2bc84e09b99aa432e479ad3433a3e8e4cac8512871943fe2fb13540dabb7d8"
+            },
+            {
+                rank: 12,
+                name: "What’s the name of the NFT Factory's exhibition and first appearance of FeliXfeliXfelix?",
+                answers: ["Ca sent le crypto-sapin", "Qu'est-ce qu'on fabrique?", "Factory:première!", "Open Screens #2"],
+                rightAnswerHash: "28b7103004edfcf2a50454b74658a1a9ffbed75b226aa3ffe51106add03a1c58"
+            },
+            {
+                rank: 6,
+                name: "Which artist released a series on Artblock Curated?",
+                answers: ["Redrum (Seven)", "Jack Butcher (Opepen)", "Deafbeef (Angular)", "Han x Nicolas Daniel (Algorythm)"],
+                rightAnswerHash: "4c2299afaa8e2668d9e39c13b6ea12be520058d24cf473b6a946f4dd5b4b9569"
+            },
+            {
+                rank: 10,
+                name: "Which NFT series is a pioneer in the customization of traits?",
+                answers: ["Hashmasks", "Niftydudes", "BoredApes", "Cryptopunks"],
+                rightAnswerHash: "62dcbe4a3602873fbe0bee75b56b8a85473606e4d8e9a73888f7ac8574924b8d"
+            },
+            {
+                rank: 7,
+                name: "Who is the biggest NFT scammer of all time?",
+                answers: ["PAK", "Kevin Rose", "Machi Big Brother", "Pixelmon"],
+                rightAnswerHash: "9ac21e528d75c6eb1b6781fc72aa5846a9b0e5bc78d59eb5785506ea4b492ab1"
+            },
+            {
+                rank: 3,
+                name: "Which NFT series was not released in 2017?",
+                answers: ["CRYPTOPUNKS", "CRYPTOSKULLS", "MOONCATS", "CRYPTOKITTIES"],
+                rightAnswerHash: "ddfa709b7dc0613fb1ea74bffebcfdc0e8fcb5e00fed7715015b9a62cef9f1a1"
+            },
+            {
+                rank: 7,
+                name: "Who is one of the founders of OpenSea?",
+                answers: ["Dingalindts", "Tieshun Roquerre aka Pacman", "Roham Gharegozlou", "Devin Finzer"],
+                rightAnswerHash: "56a19ac99afdb9ae2ad95d57ca9a57a22dab9c9583fb47e0340f3b750fa1033d"
+            },
+            {
+                rank: 12,
+                name: "What's not in the Blockchain Trilemma?",
+                answers: ["Decentralization", "Immutability", "Scalability", "Security"],
+                rightAnswerHash: "f81450f9c16333d95b6dc6279ad46f7b16d63414c80b5a4c124a704220830dc1"
+            },
+            {
+                rank: 9,
+                name: "Which entity is not a possession of the Winklevoss brothers?",
+                answers: ["OKx", "Capital Management", "NiftyGateway", "Gemini"],
+                rightAnswerHash: "c10d7d5d68a2fc43c3cc635719c965dc73db5820b4b87ee19c3cf5401dffce69"
+            },
+            {
+                rank: 5,
+                name: "Who predicted the existence of NFTs in a post on January 17, 1993?",
+                answers: ["Aaron Swartz", "Nick Szabo", "Bill Gates", "Hal Finney"],
+                rightAnswerHash: "6d7b3f8ad28b16aa0f5a3128465be936c32a94f2ba8163dedc148654fa9e78a8"
+            },
+            {
+                rank: 7,
+                name: "What is the name of the OpenSea airdrop?",
+                answers: ["Seapass", "Genuine", "Genesis", "Gemesis"],
+                rightAnswerHash: "b946e161adcc3de455ba98f94a09250665d65edc9622cd8defc5361ed913413b"
+            },
+            {
+                rank: 12,
+                name: "What accessory does Mooncat Zero #0 hold?",
+                answers: ["Ponderware visor", "King's crown", "Onchain belt", "1st Cat NFT"],
+                rightAnswerHash: "0d89351e92c8c6c7154933c01abd7b43d2d20d21c8c056387aa7fc7f1a8bae01"
+            },
+            {
+                rank: 8,
+                name: "What is the name of the first Mooncat named in August 2017?",
+                answers: ["Elon Meowsk", "Catsensus", "Mister Moo", "Vitalik"],
+                rightAnswerHash: "c4becf122aba957bd35125ebe2d3518c15d86e9bc58f823cc78d2d34fcf6da0b"
+            },
+            {
+                rank: 8,
+                name: "What is the rarity score of the Nakamoto card (Rarepepes)?",
+                answers: ["420", "69", "97", "100"],
+                rightAnswerHash: "d6d824abba4afde81129c71dea75b8100e96338da5f416d2f69088f1960cb091"
+            },
+            {
+                rank: 4,
+                name: "How much money did the Dogecoin community raise in 2014 for the Jamaican bobsleigh team?",
+                answers: ["$15K", "$50K", "$25K", "$100K"],
+                rightAnswerHash: "87ce94704514d339a27384938e0894d6e0f5199f997c972dfbfd8dfdffc19691"
+            },
+            {
+                rank: 9,
+                name: "On which blockchain was the memecoin Shiba Inu deployed?",
+                answers: ["BNB", "Bitcoin", "EOS", "ETH"],
+                rightAnswerHash: "f4a3760644d064b3f7d82bb8e43ccb090a2dac8b55cc2894bf618c551b0bc2a8"
+            },
+            {
+                rank: 11,
+                name: "What is the first blockchain based on the meme Pepe?",
+                answers: ["$PEPECASH", "$PEPE", "$RAREPEPE", "$MEMETIC/PEPECOIN"],
+                rightAnswerHash: "fc0aabc8b9ad0a084befcb9170804b8f28b4bd72d078ad10af3a79dccbc8b3bd"
+            },
+            {
+                rank: 7,
+                name: "What is the NFT collection released by the 9gag CEO?",
+                answers: ["Captainz", "MemeCoin", "MemeToken", "MemeLand"],
+                rightAnswerHash: "f0e8f01726a697ebcb8bfc42232ff763857f0e957b3436c6a21689c6a47cf566"
+            },
+            {
+                rank: 6,
+                name: "What is the name of the memecoin that parodies the S&P500?",
+                answers: ["SPX1000000", "SPMAX", "SPX6900", "SPXMOON"],
+                rightAnswerHash: "a9eff39966b515a48cfda22d2a8d099463085409a028547dd13d206cc9e53d7e"
+            }
+            
+
+        ];
+
+        // Fonction de hachage SHA-256 en JavaScript (natif)
+        async function sha256(str) {
+            const buffer = new TextEncoder("utf-8").encode(str);
+            return crypto.subtle.digest("SHA-256", buffer).then(hash => {
+                return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+            });
+        }
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function Game() {
+            let step = 0;
+            let currentQ = null; 
+            let prizetable = [[0,1,2,3,4,5,6,7,8,9,10,11],["$800", "$1 500", "$3 000", "$6 000", "$12 000", "$24 000", "$48 000", "$72 000", "$100 000", "$150 000", "$300 000", "1 Million $DUDE"]];
+            let elements = [document.getElementById("element0"), document.getElementById("element1"), document.getElementById("element2"), document.getElementById("element3")];
+            elements.forEach(el => el.addEventListener("click", function() { clicked(el); }));
+
+            document.getElementById("joker_5050").addEventListener("click", function() { joker5050(); });
+            document.getElementById("joker_tel").addEventListener("click", function() { jokerTel(); });
+            document.getElementById("joker_pub").addEventListener("click", function() { jokerPub(); });
+            document.getElementById("tryagain").style.display = "none";
+            document.getElementById("tryagain").addEventListener("click", function() { location.reload(); });
+
+            this.next = function() {
+                
+                if (step >= quizData.length) {
+                    document.querySelectorAll('.element, .joker').forEach(el => el.style.pointerEvents = 'none');
+                    return;
+                }
+                
+                //let currentQ = quizData[step];
+                console.log(step);
+                const quizDataRangN = quizData.filter(question => question.rank === step+1);
+                console.log(quizDataRangN);
+
+                const randomIndex = Math.floor(Math.random() * quizDataRangN.length);
+                currentQ = quizDataRangN[randomIndex];
+                console.log(currentQ);
+
+                let answers = shuffle(currentQ.answers.slice());
+                document.getElementById("question").innerText = `Question ${step+1}/12 : ` + currentQ.name;
+                let currentPrizeText = `Question gain: ${prizetable[1][step]}`;
+                
+                if (step >= 1 && step <= 5) {
+                    currentPrizeText += " - Milestone: $1 500";
+                } else if (step >= 6 && step <= 10) {
+                    currentPrizeText += " - Milestone: $48 000 - Don't panic !";
+                } else if (step == 11) {
+                    currentPrizeText += " - Milestone: $48 000 - Last question Dude!!!";
+                }
+                else if (step == 12) {
+                    currentPrizeText += " - YOU WIN 1 MILLION $DUDE !!!";
+                }
+                else {
+                    currentPrizeText += " - Milestone: $0";
+                }
+                
+
+                document.getElementById("current-prize").innerText = currentPrizeText;
+                elements.forEach((el, i) => {
+                    el.innerText = answers[i];
+                    el.classList.remove("right", "wrong");
+                    el.style.display = "inline-block";
+                });
+                step++;
+                
+            }
+
+            function clicked(el) {
+                document.getElementById("aide").innerText = "";
+                console.log(el.innerText);
+
+                sha256(el.innerText).then(sha1 => {
+                    console.log(sha1);
+
+                    let sha2 = currentQ.rightAnswerHash; // Assurez-vous que currentQ.rightAnswerHash est défini correctement
+
+                    console.log(sha2);
+
+                    if (sha1 == sha2 ) {
+                        el.classList.add("right");
+
+
+                        if (step == 12) {
+                            document.querySelectorAll('.element, .joker').forEach(el => el.style.pointerEvents = 'none');
+                            document.getElementById("current-prize").innerText = "YOU WIN THE JACKPOT : 1 Million $DUDE !!! ";
+                            showAnimation("You win the jackpot of 1 million $DUDE, congratulations <3 ! \n", 61, 100, function() {} )
+                        }
+                        
+                        showAnimation("Good answer! \n", 13, 100, function() { 
+                            game.next(); 
+                        });
+                    } else {
+                        el.classList.add("wrong");
+                        let mile;
+                        if (step <= 1) {
+                            mile = "$0";
+                        } else if (step <= 6) {
+                            mile = "$1 500";
+                        } else if (step <= 12) {
+                            mile = "$48 000";
+                        }
+                        showAnimation(`Bad answer :-( ! \n You lost at ${prizetable[1][step-1]} and won the milestone of ${mile}.`, 16, 100, function() { 
+                            document.querySelectorAll('.element, .joker').forEach(el => el.id !== "tryagain" ? el.style.pointerEvents = 'none' : null ); 
+                            document.getElementById("tryagain").style.display = "inline-block";
+                        
+                        });
+                    }
+                }).catch(error => {
+                    console.error('Erreur hash :', error);
+                });
+            }
+
+            // Fonction pour implémenter le joker 50/50 avec gestion asynchrone
+            function joker5050() {
+                if (document.getElementById("joker_5050").style.display === "none") return;
+
+                console.log("joker5050");
+
+                // Tableau de promesses pour calculer les hash SHA-256 de chaque réponse
+                let hashPromises = currentQ.answers.map(answer => sha256(answer));
+
+                // Exécuter toutes les promesses en parallèle et traiter les résultats
+                Promise.all(hashPromises)
+                    .then(answerHashes => {
+                        console.log(answerHashes);
+
+                        // Trouver l'index de la bonne réponse en comparant avec rightAnswerHash
+                        let correctIndex = answerHashes.findIndex(hash => hash === currentQ.rightAnswerHash);
+                        console.log(correctIndex);
+
+                        // Ajouter la bonne réponse à currentQ
+                        currentQ.rightAnswer = currentQ.answers[correctIndex];
+                        console.log(currentQ.rightAnswer);
+
+                        // Filtrer les mauvaises réponses et les masquer visuellement
+                        let wrongAnswers = elements.filter(el => el.innerText !== currentQ.rightAnswer);
+                        wrongAnswers.slice(0, 2).forEach(el => el.style.display = "none");
+
+                        // Cacher le bouton du joker 50/50
+                        document.getElementById("joker_5050").style.display = "none";
+                    })
+                    .catch(error => {
+                        console.error('Hash error :', error);
+                        // Gérer l'erreur ici, par exemple afficher un message à l'utilisateur
+                    });
+            }
+            function jokerTel() {
+                console.log("jokertel");
+
+                // Vérifier si le bouton est déjà masqué
+                if (document.getElementById("joker_tel").style.display === "none") return;
+
+                // Tableau de promesses pour calculer les hash SHA-256 de chaque réponse
+                let hashPromises = currentQ.answers.map(answer => sha256(answer));
+
+                // Exécuter toutes les promesses en parallèle et traiter les résultats
+                Promise.all(hashPromises)
+                    .then(answerHashes => {
+                        console.log("Les hashes des réponses : ", answerHashes);
+
+                        // Trouver l'index de la bonne réponse en comparant avec rightAnswerHash
+                        let correctIndex = answerHashes.findIndex(hash => hash === currentQ.rightAnswerHash);
+                        console.log("Index de la bonne réponse : ", correctIndex);
+
+                        // Mettre à jour currentQ avec la bonne réponse
+                        currentQ.rightAnswer = currentQ.answers[correctIndex];
+                        console.log("La bonne réponse : ", currentQ.rightAnswer);
+
+                        // Générer la suggestion après que currentQ.rightAnswer est mis à jour
+                        generateSuggestion();
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du calcul des hashes :', error);
+                        // Gérer l'erreur ici, par exemple afficher un message à l'utilisateur
+                    });
+
+                function generateSuggestion() {
+                    // Générer la suggestion basée sur currentQ.rightAnswer
+                    let correct = Math.random() < 0.6;
+                    let suggestion = correct ? currentQ.rightAnswer : elements.filter(el => el.innerText !== currentQ.rightAnswer)[Math.floor(Math.random() * 3)].innerText;
+                    console.log("Suggestion : ", suggestion);
+                    let dudenumber = Math.floor(Math.random() * 2048);
+                    document.getElementById("aide").innerText = "Cypherdude#" + `${dudenumber}`+ " answers: " + `${suggestion}`;
+                    document.getElementById("joker_tel").style.display = "none";
+                }
+            }
+
+                function jokerPub() {
+                    console.log("jokerPub");
+
+                    // Vérifier si le bouton est déjà masqué
+                    if (document.getElementById("joker_pub").style.display === "none") return;
+
+                    // Tableau de promesses pour calculer les hash SHA-256 de chaque réponse
+                    let hashPromises = currentQ.answers.map(answer => sha256(answer));
+
+                    // Exécuter toutes les promesses en parallèle et traiter les résultats
+                    Promise.all(hashPromises)
+                        .then(answerHashes => {
+                            console.log("Les hashes des réponses : ", answerHashes);
+
+                            // Trouver l'index de la bonne réponse en comparant avec rightAnswerHash
+                            let correctIndex = answerHashes.findIndex(hash => hash === currentQ.rightAnswerHash);
+                            console.log("Index de la bonne réponse : ", correctIndex);
+
+                            if (correctIndex === -1) {
+                                throw new Error("La bonne réponse n'a pas été trouvée dans la liste des réponses.");
+                            }
+
+                            // Mettre à jour currentQ avec la bonne réponse
+                            currentQ.rightAnswer = currentQ.answers[correctIndex];
+                            console.log("La bonne réponse : ", currentQ.rightAnswer);
+
+                            // Calculer les pourcentages après que currentQ.rightAnswer est mis à jour
+                            calculatePercentages(correctIndex);
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors du calcul des hashes :', error);
+                            // Gérer l'erreur ici, par exemple afficher un message à l'utilisateur
+                        });
+
+                    function calculatePercentages(correctIndex) {
+                        let percentages = [0, 0, 0, 0];
+                        let sum = 0;
+                        let remaining = 100;
+
+                        // Assigner un pourcentage élevé à la bonne réponse
+                        percentages[correctIndex] = Math.floor(Math.random() * 60) + 20; // Entre 40% et 99%
+                        console.log(percentages)
+                        sum += percentages[correctIndex];
+                        remaining -= percentages[correctIndex];
+
+                        // Assigner des pourcentages aux autres réponses restantes
+                        elements.forEach((el, i) => {
+                            if (i !== correctIndex) {
+                                percentages[i] = Math.floor(Math.random() * remaining);
+                                console.log(percentages)
+                                sum += percentages[i];
+                                remaining -= percentages[i];
+                            }
+                        });
+
+                        // Ajuster le pourcentage pour atteindre exactement 100%
+                        percentages[correctIndex] += 100 - sum;
+                        console.log(percentages)
+                        // Afficher les pourcentages dans l'élément d'aide
+                        document.getElementById("aide").innerText = "";
+                        elements.forEach((el, i) => {
+                            document.getElementById("aide").innerText += " -" + currentQ.answers[i] + `(${percentages[i]}%) `;
+                        });
+
+                        // Masquer le bouton du joker de public après l'affichage des pourcentages
+                        document.getElementById("joker_pub").style.display = "none";
+                    }
+                }
+
+
+        }
+
+        function showAnimation(text, loops, speed, callback) {
+            const animationEl = document.getElementById("animation");
+            let counter = 0;
+            function animate() {
+                if (counter >= loops) {
+                    animationEl.innerText = text;
+                    callback();
+                    return;
+                }
+                animationEl.innerText = text.slice(0, counter % text.length + 1);
+                counter++;
+                setTimeout(animate, speed);
+            }
+            animate();
+            
+        }
+
+        let game = new Game();
+        game.next();
+        
+    </script>
+</body>
+</html>
